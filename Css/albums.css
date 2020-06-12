@@ -1,0 +1,211 @@
+/* Set up */
+*{
+    font-family: 'Montserrat', sans-serif;
+}
+
+body{
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: black;
+}
+
+button, a{
+    cursor: pointer;
+}
+
+button:focus, a:focus{
+    outline: none;
+}
+
+a{
+    color: inherit;
+    text-decoration: none;
+}
+
+p{
+    margin: 0;
+}
+
+/* Loader */
+.loaderWrapper{
+    position: fixed;
+    height: 100vh;
+    width: 100vw;
+    top: 0;
+    left: 0;
+    z-index: 100;
+}
+
+.loaderImg{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    -webkit-filter: grayscale(70%) blur(2px); /* Safari 6.0 - 9.0 */
+    filter: grayscale(70%) blur(2px);
+}
+
+/* Logo */
+.logo{
+    position: absolute;
+    width: 10vw;
+    top: 15px;
+    cursor: pointer;
+    transition: .5s;
+}
+.logo:hover{
+    width: 11vw;
+}
+.logo img{
+    width: 100%;
+}
+
+/* Home */
+.albumHero{
+    height: 100vh;
+    width: 100vw;
+    max-width:100%;
+    background-color: black;
+    display: flex;
+    justify-content: center;
+}
+
+/* Background */
+.heroBack{
+    position: absolute;
+    width: 110%;
+    height: 110%;
+    top: -5%;
+    left: -5%;
+    background: url(../lib/The-Strokes.jpg);
+    background-position: center;
+    background-size: cover;
+    opacity: .5;
+    filter: blur(1.5rem);
+}
+
+/* Animation */
+
+#albumsSelect{
+    height: 40px;
+    position: absolute;
+    left: 20%;
+    top: 10%;
+}
+
+.album{
+    height: 20vw;
+    width: 20vw;
+    top: 30%;
+    left: 10%;
+    position: absolute;
+}
+
+.album img{
+    width: 100%;
+    height: 100%;
+}
+
+.disque{
+    height: 20vw;
+    width: 20vw;
+    position: absolute;
+}
+
+.disque1{
+    border-radius: 50%;
+    border: 2px solid white;
+    top: 30%;
+    left: 20%;
+}
+
+.disque2{
+    border-radius: 50%;
+    top: 30%;
+    left: 20%;
+    border: 2px solid red;
+}
+
+/* disque anim 1 */
+.disqueAnim1{
+    animation: disqueAnim1 .6s ease;
+    animation-fill-mode: forwards;
+}
+
+@keyframes disqueAnim1 {
+    0% {
+        left: 20%;
+    }
+    60% {
+        opacity: 1;
+    }
+    100% {
+        left: 30%;
+        opacity: 0;
+    }
+}
+
+/* disque anim 2 */
+.disqueAnim2{
+    animation: disqueAnim2 .6s ease;
+    animation-fill-mode: forwards;
+}
+
+@keyframes disqueAnim2 {
+    0% {
+        left: 30%;
+        opacity: 0;
+    }
+    40% {
+        opacity: 1;
+    }
+    100% {
+        left: 20%;
+    }
+}
+
+/* album anim 1 */
+.albumAnim1{
+    animation: albumAnim1 .6s ease;
+    animation-fill-mode: forwards;
+}
+
+@keyframes albumAnim1 {
+    0% {
+        left: 10%;
+    }
+    60% {
+        opacity: 1;
+    }
+    100% {
+        left: 4%;
+        opacity: 0;
+    }
+}
+
+/* album anim 2 */
+.albumAnim2{
+    animation: albumAnim2 .6s ease;
+    animation-fill-mode: forwards;
+}
+
+@keyframes albumAnim2 {
+    0% {
+        left: 4%;
+        opacity: 0;
+    }
+    40% {
+        opacity: 1;
+    }
+    100% {
+        left: 10%;
+    }
+}
+
+.returnHome{
+    height: 30px;
+    width: 60px;
+}
+.imgCache{
+    display: none;
+}
