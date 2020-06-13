@@ -1,14 +1,9 @@
-$(document).ready(function () {
+$(document).ready(function(){
 
-    // Detect if admin logged
-    firebase.auth().onAuthStateChanged(function (user) {
-        if (user) {
-            // Changer interface pour admin !
-        }
-    });
+    const links = document.querySelectorAll(".navLinks")
+    links.forEach(element => element.classList.add("linksAnim"))
 
 })
-
 
 /**
  * Firebase
@@ -60,18 +55,8 @@ randomImage()
  * Animations
  */
 
-// background move on mousemove
-const windo = $(window)
-
-$(".albumHero").mousemove((e) => {
-    let moveX = ((windo.width() / 2) - e.pageX) * 0.1
-    let moveY = ((windo.height() / 2) - e.pageY) * 0.1
-    $(".heroBack").css("margin-left", moveX + "px")
-    $(".heroBack").css("margin-top", moveY + "px")
-})
-
 // albums
-const parent = document.querySelector("#animParent")
+const parent = document.querySelector(".animParent")
 const albumsPath = [
     "./lib/coverTheNewAbnormal.jpg",
     "./lib/coverComedownMachine.jpg",
@@ -123,10 +108,4 @@ function animation() {
 
 let select = document.querySelector("#albumsSelect")
 select.addEventListener("change", animation)
-
-/**
- * Buttons
- */
-
-document.querySelector(".logo").addEventListener("click", () => location.assign("index.html"))
 

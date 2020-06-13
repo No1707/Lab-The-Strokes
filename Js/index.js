@@ -1,10 +1,11 @@
 $(document).ready(function () {
 
   // animation
-  const logo = document.querySelector(".logo")
+  // const logo = document.querySelector(".logo")
+  // logo.classList.add("logoAnim")
   const links = document.querySelectorAll(".navLinks")
-  logo.classList.add("logoAnim")
   links.forEach(element => element.classList.add("linksAnim"))
+
 
 })
 
@@ -22,7 +23,63 @@ var firebaseConfig = {
   appId: "1:70622579594:web:6b6a4b83c721a2d6789673"
 }
 firebase.initializeApp(firebaseConfig)
+var db = firebase.firestore()
 
+
+/**
+ * countdown
+ */
+let datesArray = []
+db.collection("dates").onSnapshot(function (querySnapshot) {
+
+  querySnapshot.forEach(function (doc) {
+    datesArray.push(new Date(doc.data().Date.split("-").reverse().join("-")))
+  })
+
+})
+console.log(datesArray)
+
+setTimeout(() => {
+  console.log("exec")
+  if(datesArray.length > 0){
+    const newDate = datesArray.sort((a, b) => {
+      var da = new Date(a).getTime();
+      var db = new Date(b).getTime();
+  
+      return da < db ? -1 : da > db ? 1 : 0
+    });
+  }
+  countDown(datesArray[0])
+}, 2000)
+
+function countDown(date) {
+  // Set the date we're counting down to
+  var countDownDate = date.getTime()
+
+  // Update the count down every 1 second
+  var x = setInterval(function () {
+    // Get today's date and time
+    var now = new Date().getTime()
+
+    // Find the distance between now and the count down date
+    var distance = countDownDate - now
+
+    // Time calculations for days, hours, minutes and seconds
+    var days = Math.floor(distance / (1000 * 60 * 60 * 24))
+    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
+    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60))
+    var seconds = Math.floor((distance % (1000 * 60)) / 1000)
+
+    // Display the result in the element with id="demo"
+    $(".countdown").html(days + "d " + hours + "h " + minutes + "m " + seconds + "s ")
+
+    // If the count down is finished, write some text
+    if (distance < 0) {
+      clearInterval(x);
+      $(".countdown").html("Expired");
+    }
+  }, 1000);
+}
 
 /**
  * Buttons
@@ -33,11 +90,11 @@ const navLinks = document.querySelectorAll(".navLinks")
 // Albums
 navLinks[0].addEventListener("click", () => { location.assign("albums.html") })
 
+// Tournées
+navLinks[2].addEventListener("click", () => { location.assign("tournées.html") })
+
 // Réseaux
-navLinks[3].addEventListener("click", () => {
-  console.log(navLinks[3])
-  location.assign("réseaux.html")
-})
+navLinks[3].addEventListener("click", () => { location.assign("réseaux.html") })
 
 
 /**
