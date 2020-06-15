@@ -21,7 +21,7 @@ document.querySelector(".confirm").addEventListener("click", () => {
       return firebase.auth().signInWithEmailAndPassword(email, pass)
         .then(function () {
           alert("Vous êtes connecté")
-          location.assign("index2.html")
+          location.assign("index.html")
         });
     })
     .catch(function (error) {

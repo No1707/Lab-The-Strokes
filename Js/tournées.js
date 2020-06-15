@@ -5,6 +5,7 @@ $(document).ready( () => {
         $(".tournées").addClass("reveal")
         $(".loaderWrapper").fadeOut("slow")
     }, 1400)
+    
 })
 
 /**

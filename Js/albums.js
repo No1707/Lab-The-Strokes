@@ -56,7 +56,7 @@ randomImage()
  */
 
 // albums
-const parent = document.querySelector(".animParent")
+
 const albumsPath = [
     "./lib/coverTheNewAbnormal.jpg",
     "./lib/coverComedownMachine.jpg",
@@ -70,6 +70,7 @@ function animation() {
     // variables
     let album = document.querySelector(".album")
     let disque = document.querySelector(".disque")
+    const parent = document.querySelector(".animParent")
     const value = select.value
 
     // when animation ends

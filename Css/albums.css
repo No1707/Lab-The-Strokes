@@ -1,6 +1,14 @@
 /* Set up */
+@font-face {
+    font-family: 'DIN 1451 Std';
+    src:url('../lib/fonts/DINEngschriftStd.woff2') format('woff2'),
+        url('../lib/fonts/DINEngschriftStd.woff') format('woff'),
+        url('../lib/fonts/DIN\ 1451\ Std\ Engschrift.otf') format('opentype');
+}
+
 *{
-    font-family: 'Montserrat', sans-serif;
+    font-family: 'DIN 1451 Std';
+    text-transform: uppercase;
 }
 
 body{
@@ -41,7 +49,7 @@ p{
     height: 100%;
     object-fit: cover;
     -webkit-filter: grayscale(70%) blur(2px); /* Safari 6.0 - 9.0 */
-    filter: grayscale(70%) blur(2px);
+    filter: blur(2px);
 }
 
 /* Home */
@@ -104,7 +112,7 @@ p{
     content: 'Qui sont'
 }
 .navThree:before{
-    content: 'Voir les'
+    content: 'Voir la'
 }
 .navFour:before{
     content: 'Visiter leur'
@@ -340,26 +348,27 @@ p{
     position: relative;
 }
 
-.newIcons{
-    opacity: 0;
-}
-
 .socialNav img{
     height: 100%;
     width: 100%;
-    transition: .7s;
 }
 .socialNav img:nth-child(1){
     filter: invert(100%);
+    position: absolute;
+    transition: .4s;
+}
+
+.newIcons{
+    transition: .7s;
+    opacity: 0;
+    position:absolute;
 }
 
 /* hover */
-.socialNav div:hover img{
-    transform: translateY(-110%)
-}
 .socialNav div:hover img:nth-child(1){
     opacity: 0;
 }
 .socialNav div:hover img:nth-child(2){
     opacity: 1;
+    transform: scale(1.5)
 }
