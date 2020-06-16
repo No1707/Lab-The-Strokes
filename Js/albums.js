@@ -1,40 +1,36 @@
-$(document).ready(function(){
+$(document).ready(function () {
 
-    const links = document.querySelectorAll(".navLinks")
-    links.forEach(element => element.classList.add("linksAnim"))
+    
+    setTimeout(() => {
+        // fade out loader when loaded
+        $(".loaderWrapper").fadeOut("slow")
+
+        // reveal links
+        const links = document.querySelectorAll(".navLinks")
+        links.forEach(element => element.classList.add("linksAnim"))
+
+        // dark background
+        const background = document.querySelector(".heroBack")
+        background.classList.add("backAnim")
+
+        // reveal right
+        const right = document.querySelector(".rightContainer")
+        right.classList.add("rightAnim")
+
+        // reveal right
+        const left = document.querySelector(".leftContainer")
+        left.classList.add("leftAnim")
+    }, 1500)
+
+    new Plyr('#player', {
+        settings: []
+    });
 
 })
-
-/**
- * Firebase
- */
-
-var firebaseConfig = {
-    apiKey: "AIzaSyBET4P2MUNvHQyxOX9qSExfpnlTOk3y8F4",
-    authDomain: "labthestrokes.firebaseapp.com",
-    databaseURL: "https://labthestrokes.firebaseio.com",
-    projectId: "labthestrokes",
-    storageBucket: "labthestrokes.appspot.com",
-    messagingSenderId: "70622579594",
-    appId: "1:70622579594:web:6b6a4b83c721a2d6789673"
-}
-firebase.initializeApp(firebaseConfig)
-
 
 /**
  * Page loader
  */
-
-// Fade out loader when loaded
-$(window).on("load", function () {
-    setTimeout(() => {
-        $(".loaderWrapper").fadeOut("slow")
-    }, 1400)
-})
-
-// Play audio
-const audio = document.querySelector("#destructiveFire")
-audio.play()
 
 // Random image
 function randomImage() {
@@ -50,6 +46,43 @@ function randomImage() {
 }
 randomImage()
 
+
+/**
+ * Firebase
+ */
+
+var firebaseConfig = {
+    apiKey: "AIzaSyBET4P2MUNvHQyxOX9qSExfpnlTOk3y8F4",
+    authDomain: "labthestrokes.firebaseapp.com",
+    databaseURL: "https://labthestrokes.firebaseio.com",
+    projectId: "labthestrokes",
+    storageBucket: "labthestrokes.appspot.com",
+    messagingSenderId: "70622579594",
+    appId: "1:70622579594:web:6b6a4b83c721a2d6789673"
+}
+firebase.initializeApp(firebaseConfig)
+const storage = firebase.storage();
+
+/**
+ * Play music
+ */
+
+$(".playTitle").on("click", function () {
+    
+    $(".playTitle").removeClass("playing")
+    this.classList.add("playing")
+    const title = this.textContent
+    const ref = title.split(" ").join("") + ".mp3"
+    
+    storage.ref(ref).getDownloadURL().then(function (url) {
+
+        const player = document.querySelector("#player")
+        player.src = url
+        player.play()
+    }).catch(function (error) {
+        console.log(error)
+    })
+})
 
 /**
  * Animations
@@ -70,7 +103,7 @@ function animation() {
     // variables
     let album = document.querySelector(".album")
     let disque = document.querySelector(".disque")
-    const parent = document.querySelector(".animParent")
+    const parent = document.querySelector(".leftContainer")
     const value = select.value
 
     // when animation ends
@@ -109,4 +142,3 @@ function animation() {
 
 let select = document.querySelector("#albumsSelect")
 select.addEventListener("change", animation)
-

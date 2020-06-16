@@ -1,4 +1,3 @@
-
 /* Set up */
 @font-face {
     font-family: 'DIN 1451 Std';
@@ -7,19 +6,13 @@
         url('../lib/fonts/DIN\ 1451\ Std\ Engschrift.otf') format('opentype');
 }
 
-*{
-    font-family: 'DIN 1451 Std';
-    text-transform: uppercase;
-}
-
 body{
     margin: 0;
     padding: 0;
-    overflow: hidden;
     background-color: black;
 }
 
-button, a{
+button, a, i{
     cursor: pointer;
 }
 
@@ -36,56 +29,78 @@ p{
     margin: 0;
 }
 
-.preload{
-    display: none;
+/* Loader */
+.loaderWrapper{
+    position: fixed;
+    height: 100vh;
+    width: 100vw;
+    top: 0;
+    left: 0;
+    z-index: 100;
 }
 
-    /* Home page */
+.loaderImg{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
 
-/* Hero */
-.hero{
-    height: 70vh;
+/* Home */
+.strokesHero{
     width: 100vw;
     max-width:100%;
-    overflow: hidden;
+    background-color: black;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
     flex-direction: column;
 }
 
 /* Background */
 .heroBack{
-    position: absolute;
-    width: 110%;
-    height: 110%;
-    top: -5%;
-    left: -5%;
-    background-image: url(../lib/The-Strokes.jpg);
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: url(../lib/The-Strokes.jpg);
     background-position: center;
     background-size: cover;
     opacity: .5;
+    filter: blur(1.5rem);
+}
+
+.backAnim{
+    animation: backAnim 1s ease;
+}
+@keyframes backAnim {
+    0% {
+        opacity: 1;
+    }
+    30% {
+        opacity: 1;
+    }
+    100% {
+        opacity: .5s;
+    }
 }
 
 /* Nav buttons */
 .navbar{
     width: 100%;
-    height: 20%;
+    height: 20vh;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
+    padding-bottom: 100px;
 }
 
 .navLinks{
     display: inline-block;
     position: relative;
     color: white;
-    font-size: 2.5vw;
-    opacity: 1;
-    transition: .3s ease;
-    animation-fill-mode: forwards;
-    -moz-animation-fill-mode: forwards;
-    -webkit-animation-fill-mode: forwards;
+    transition: .5s ease;
+    font-size: 2vw;
+    font-family: 'DIN 1451 Std';
+    text-transform: uppercase;
 }
 
 .navLinks:before{
@@ -94,24 +109,24 @@ p{
     position: absolute;
     left: 0;
     top: -10px;
+    display: inline-block;
     height: 1em;
     width: 150%;
-    font-size: .8vw;
+    font-size: 15px;
     transition: .35s;
-    width: 150%;
     color: #E84E1B;
 }
 .navOne:before{
-    content: 'Découvrir leurs'
+    content: 'Retourner à';
 }
 .navTwo:before{
-    content: 'Qui sont'
+    content: 'Découvrir leurs';
 }
 .navThree:before{
-    content: 'Voir la'
+    content: 'Voir la';
 }
 .navFour:before{
-    content: 'Visiter leur'
+    content: 'Visiter leur';
 }
 
 .navLinks:after {
@@ -144,67 +159,141 @@ p{
     opacity: 1;
     -webkit-transform: scale(1);
     transform: scale(1);
-    color: #E84E1B;
 }
 
 .linksAnim{
-    animation: linksAnim 2s ease;
-}
-
-.linksAnim:hover{
-    transform: scale(1.1)
+    animation: linksAnim 1.5s ease;
 }
 
 @keyframes linksAnim {
     0%{
         opacity: 0;
     }
-    60% {
+    30% {
         transform: translateY(-2vh);
         opacity: 0;
     }
+    80% {
+        opacity: 1;
+    }
     100% {
         transform: translateY(0vh);
-        opacity: 1;
     }
 }
 
-/* Coundown */
-.countdown{
-    font-size: 5vw;
-    opacity: 0;
-    text-align: center;
-    color: rgba(255, 255, 255);
+/* Main */
+
+.mainContainer{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-/* Reveal dates */
+/* articles */
 
-.reveal{
-    animation: reveal 2s ease-out;
-    animation-fill-mode: forwards;
+.article{
+    padding-bottom: 100px;
+    height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 80%;
+    font-family: "Montserrat", "sans-serif";
+    font-size: 1vw;
+    line-height: 30px;
+    color: white;
 }
 
-@keyframes reveal {
-    0% {
-        transform: translateY(5vh);
+.article img{
+    position: relative;
+    width: 45%;
+    float: left;
+}
+
+.article div{
+    width: 45%;
+}
+
+.article p, h1{
+    position: relative;
+}
+
+.article2{
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: "Montserrat", "sans-serif";
+    font-size: 1vw;
+    line-height: 30px;
+    color: white;
+}
+
+.article2 p, h2{
+    position: relative;
+}
+
+.article2 p{
+    width: 50%;
+}
+
+.article2 div{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.article2 img{
+    position: relative;
+    width: 40%;
+}
+
+/* Reveal */
+
+/* first articles */
+.articleAnim{
+    animation: articleAnim 1.5s ease; 
+}
+@keyframes articleAnim {
+    0%{
         opacity: 0;
     }
-    100% {
-        transform: translateY(0vh);
+    30% {
+        transform: translateY(7vh);
+        opacity: 0;
+    }
+    80% {
         opacity: 1;
     }
+    100% {
+        transform: translateY(0vh);
+    }
 }
+/* others */
+.reveal{
+    transform: translateY(7vh);
+    opacity: 0;
+    transition: transform 1s cubic-bezier(0, 0, 0, 1), opacity 1s;
+    will-change: transform, opacity;
+}
+
+.reveal.revealed{
+    transform: translateY(0vh);
+    opacity: 1;
+}
+
+/* footer */
 
 /* Liens réseaux */
 .socialNav{
-    position: absolute;
+    position: relative;
     width: 25%;
-    height: 10%;
-    top: 90%;
     left: 75%;
     display: flex;
     justify-content: space-around;
-    align-items: center;
+    padding: 60px 0 20px 0;
 }
 
 .socialNav div{

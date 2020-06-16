@@ -1,32 +1,26 @@
-$(document).ready( () => {
+$(document).ready(() => {
 
-    // Fade out loader when loaded
     setTimeout(() => {
-        $(".tournées").addClass("reveal")
+        // fade out loader when loaded
         $(".loaderWrapper").fadeOut("slow")
-    }, 1400)
-    
+
+        // reveal links
+        const links = document.querySelectorAll(".navLinks")
+        links.forEach(element => element.classList.add("linksAnim"))
+
+        // reveal dates
+        $(".tournées").addClass("reveal")
+
+        // dark background
+        const background = document.querySelector(".heroBack")
+        background.classList.add("backAnim")
+    }, 1500)
+
 })
 
 /**
- * Firebase
+ * Page loader
  */
-
-var firebaseConfig = {
-    apiKey: "AIzaSyBET4P2MUNvHQyxOX9qSExfpnlTOk3y8F4",
-    authDomain: "labthestrokes.firebaseapp.com",
-    databaseURL: "https://labthestrokes.firebaseio.com",
-    projectId: "labthestrokes",
-    storageBucket: "labthestrokes.appspot.com",
-    messagingSenderId: "70622579594",
-    appId: "1:70622579594:web:6b6a4b83c721a2d6789673"
-};
-firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
-
-// Play audio
-const audio = document.querySelector("#destructiveFire")
-audio.play()
 
 // Random image
 function randomImage() {
@@ -42,36 +36,59 @@ function randomImage() {
 }
 randomImage()
 
+/**
+ * Firebase
+ */
+
+var firebaseConfig = {
+    apiKey: "AIzaSyBET4P2MUNvHQyxOX9qSExfpnlTOk3y8F4",
+    authDomain: "labthestrokes.firebaseapp.com",
+    databaseURL: "https://labthestrokes.firebaseio.com",
+    projectId: "labthestrokes",
+    storageBucket: "labthestrokes.appspot.com",
+    messagingSenderId: "70622579594",
+    appId: "1:70622579594:web:6b6a4b83c721a2d6789673"
+}
+firebase.initializeApp(firebaseConfig)
+const db = firebase.firestore()
+
+/**
+ * Update tournées 
+ */
 
 const dateIp = $("#date")
 const cityIp = $("#city")
 const countryIp = $("#country")
 const placeIp = $("#place")
 
-// update tournées
 db.collection("dates").onSnapshot(function (querySnapshot) {
 
     const main = $(".mainContainer")
     main.html("")
-    
+
 
     querySnapshot.forEach(function (doc) {
-        main.append(`<div class="tournées ${doc.id}"><h2>${doc.data().Date}</h2><h1>${doc.data().City}</h1><p>${doc.data().Country}</p><p>${doc.data().Place}</p><button class="adminEdit" title="Modifier/Supprimer"><img src="./lib/editIcon.png" alt=""></button></div>`)
+
+        if (doc.data().Full) {
+            main.append(`<div class="tournées ${doc.id}"><h2>${doc.data().Date}</h2><h1>${doc.data().City}</h1><h3>${doc.data().Place}</h3><p>${doc.data().Country}</p><div><button class="adminEdit" title="Modifier"><img src="./lib/editIcon.png" alt=""></button><button class="deleteDate" title="Supprimer"><img src="./lib/deleteIcon.png" alt=""></button></div><p class="full">Complet</p></div>`)
+        } else {
+            main.append(`<div class="tournées ${doc.id}"><h2>${doc.data().Date}</h2><h1>${doc.data().City}</h1><h3>${doc.data().Place}</h3><p>${doc.data().Country}</p><div><button class="adminEdit" title="Modifier"><img src="./lib/editIcon.png" alt=""></button><button class="deleteDate" title="Supprimer"><img src="./lib/deleteIcon.png" alt=""></button></div></div>`)
+        }
     })
 
-    // admin Options
-    var user = firebase.auth().currentUser;
+    // admin options if User
+    var user = firebase.auth().currentUser
     if (user) {
 
         $("#adminAdd").css("display", "inline-block")
-        $(".adminEdit").css("display", "inline-block")
+        $(".tournées div").css("display", "flex")
 
         // admin edit
         $(".adminEdit").on("click", function () {
 
-            window.classDiv = this.parentNode.className.split(" ")[1]
+            window.classDiv = this.parentNode.parentNode.className.split(" ")[1]
 
-            // display values
+            // display change dates inputs
             db.collection("dates").doc(classDiv).get().then(function (doc) {
                 if (doc.exists) {
                     dateIp.val(doc.data().Date)
@@ -81,6 +98,7 @@ db.collection("dates").onSnapshot(function (querySnapshot) {
                 }
             })
 
+            $("#isfull").css("display", "inline-block")
             $("#deleteDates").css("display", "inline-block")
             $("#changeDates").css("display", "inline-block")
             $("#confirmDates").css("display", "none")
@@ -92,11 +110,14 @@ db.collection("dates").onSnapshot(function (querySnapshot) {
 // change dates
 $("#changeDates").on("click", function () {
 
+    const checkbox = $("#isfull").is(":checked") ? true : false
+
     db.collection("dates").doc(classDiv).set({
         Date: dateIp.val(),
         City: cityIp.val(),
         Country: countryIp.val(),
-        Place: placeIp.val()
+        Place: placeIp.val(),
+        Full: checkbox === true ? true : false
     }).then(function () {
         alert("Modifié")
         $(".adminInputs").css("display", "none")
@@ -106,11 +127,12 @@ $("#changeDates").on("click", function () {
 })
 
 // delete dates
-$("#deleteDates").on("click", function () {
+$(".deleteDate").on("click", function () {
 
-    $(".adminInputs").css("display","none")
+    const deleteClasse = this.parentNode.parentNode.className.split(" ")[1]
+    $(".adminInputs").css("display", "none")
 
-    db.collection("dates").doc(classDiv).delete().then(function () {
+    db.collection("dates").doc(deleteClasse).delete().then(function () {
         alert("supprimé")
     }).catch(function (error) {
         console.log(error)
@@ -118,7 +140,7 @@ $("#deleteDates").on("click", function () {
 
 })
 
-// add dates
+// display add dates inputs
 $("#adminAdd").on("click", () => {
 
     dateIp.val("")
@@ -126,6 +148,7 @@ $("#adminAdd").on("click", () => {
     countryIp.val("")
     placeIp.val("")
 
+    $("#isfull").css("display", "inline-block")
     $("#changeDates").css("display", "none")
     $("#deleteDates").css("display", "none")
     $("#confirmDates").css("display", "inline-block")
@@ -141,10 +164,11 @@ $("#confirmDates").on("click", () => {
         Date: dateIp.val(),
         City: cityIp.val(),
         Country: countryIp.val(),
-        Place: placeIp.val()
+        Place: placeIp.val(),
+        Full: false
     }).then(function () {
-        alert("Date ajouté au site !")
+        alert("Date ajouté")
     })
 })
 
-$("#cancelDates").on("click", () => $(".adminInputs").css("display","none"))
+$("#cancelDates").on("click", () => $(".adminInputs").css("display", "none"))

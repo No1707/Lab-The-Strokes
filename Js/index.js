@@ -1,11 +1,12 @@
 $(document).ready(function () {
 
   // animation
-  // const logo = document.querySelector(".logo")
-  // logo.classList.add("logoAnim")
   const links = document.querySelectorAll(".navLinks")
   links.forEach(element => element.classList.add("linksAnim"))
 
+  setTimeout(() => {
+    $(".countdown").addClass("reveal")
+  }, 3000)
 
 })
 
@@ -41,11 +42,11 @@ console.log(datesArray)
 
 setTimeout(() => {
   console.log("exec")
-  if(datesArray.length > 0){
+  if (datesArray.length > 0) {
     const newDate = datesArray.sort((a, b) => {
       var da = new Date(a).getTime();
       var db = new Date(b).getTime();
-  
+
       return da < db ? -1 : da > db ? 1 : 0
     });
   }
@@ -71,7 +72,7 @@ function countDown(date) {
     var seconds = Math.floor((distance % (1000 * 60)) / 1000)
 
     // Display the result in the element with id="demo"
-    $(".countdown").html(days + "d " + hours + "h " + minutes + "m " + seconds + "s ")
+    $(".countdown").html(days + "j " + hours + "h " + minutes + "m " + seconds + "s <br>avant leur prochain concert !")
 
     // If the count down is finished, write some text
     if (distance < 0) {
@@ -80,21 +81,6 @@ function countDown(date) {
     }
   }, 1000);
 }
-
-/**
- * Buttons
- */
-
-const navLinks = document.querySelectorAll(".navLinks")
-
-// Albums
-navLinks[0].addEventListener("click", () => { location.assign("albums.html") })
-
-// Tournées
-navLinks[2].addEventListener("click", () => { location.assign("tournées.html") })
-
-// Réseaux
-navLinks[3].addEventListener("click", () => { location.assign("réseaux.html") })
 
 
 /**
