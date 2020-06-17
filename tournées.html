@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
-    <title>The Strokes - Tournées</title>
+    <title>The Strokes - Tournée</title>
     <link rel="stylesheet" href="./Css/reset.css">
     <link rel="stylesheet" href="./Css/tournées.css">
 </head>
@@ -31,7 +31,7 @@
         </div>
 
         <!-- admin button & edit window -->
-        <button id="adminAdd" title="Ajout de tournées">+</button>
+        <button id="adminAdd" title="Ajouter concert">+</button>
         <div class="adminInputs">
             <div>
                 <label for="">Date ( JJ-MM-AAAA )</label>
@@ -42,8 +42,10 @@
                 <input autocomplete="off" id="place" type="text" placeholder="Lieux">
                 <label for="">Pays</label>
                 <input autocomplete="off" id="country" type="text" placeholder="Pays">
-                <label for="">Complet ?</label>
+                <label id="isfullLabel" for="">Complet ?</label>
                 <input id="isfull" type="checkbox">
+                <label for="">Lien d'achat tickets</label>
+                <input autocomplete="off" id="tickets" type="text" placeholder="https://...">
             </div>
             <div>
                 <button id="changeDates">Modifier</button>
@@ -52,7 +54,7 @@
             </div>
         </div>
 
-        <!-- container dates -->
+        <!-- main -->
         <main class="mainContainer">
 
         </main>
