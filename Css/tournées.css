@@ -71,7 +71,7 @@ p, h1, h2, h3{
         opacity: 1;
     }
     100% {
-        opacity: .5s;
+        opacity: .5;
     }
 }
 
@@ -129,7 +129,7 @@ p, h1, h2, h3{
     content: 'Qui sont'
 }
 .navThree:before{
-    content: 'Voir les'
+    content: 'Découvrir leur'
 }
 .navFour:before{
     content: 'Visiter leur'
@@ -230,8 +230,20 @@ p, h1, h2, h3{
 
 .tournées h1{
     font-size: 2.7vw;
-    background: white;
     color: black;
+    -webkit-text-stroke-width: 1px;
+    -webkit-text-stroke-color: #E84E1B;
+}
+
+.tournées h2{
+    font-size: 1.5vw;
+}
+
+.tournées a {
+    text-decoration: underline;
+    color: #f74f17;
+    transition: .2s;
+    padding-left: 5%;
 }
 
 /* Reveal dates */
@@ -304,8 +316,8 @@ p, h1, h2, h3{
 .adminInputs{
     position: absolute;
     background: rgba(177, 175, 175, 0.973);
-    top: 20%;
-    height: 70%;
+    top: 10%;
+    height: 80%;
     width: 30%;
     z-index: 1;
     display: none; 
@@ -318,10 +330,14 @@ p, h1, h2, h3{
     align-items: center;
     justify-content: space-around;
     width: 50%;
-    height: 80%;
+    height: 85%;
 }
 .adminInputs div:nth-child(2){
-    height: 20%;
+    height: 15%;
+    display: flex;
+    align-items: center;
+    width: 50%;
+    justify-content: space-around;
 }
 .adminInputs input{
     height: 10%;
@@ -387,4 +403,123 @@ p, h1, h2, h3{
 .socialNav div:hover img:nth-child(2){
     opacity: 1;
     transform: scale(1.5)
+}
+
+@media screen and (max-width: 1440px){
+    /* navLinks */
+    .navLinks:before{
+        font-size: 1.1vw;
+    }
+}
+
+@media screen and (max-width: 1024px){
+    /* navLinks */
+    .navLinks{
+        font-size: 2.5vw;
+    }
+    .tournées h2{
+        font-size: 2vw;
+    }
+    .navLinks:before{
+        font-size: 1.1vw;
+    }
+    /* main */
+    .tournées h1{
+        background: #E84E1B;
+        color: white;
+        -webkit-text-stroke-width: inherit;
+        -webkit-text-stroke-color: inherit;
+    }
+}
+
+@media screen and (max-width: 768px){
+    /* navLinks */
+    .navLinks{
+        font-size: 3.5vw;
+    }
+    .navLinks:before{
+        font-size: 1.4vw;
+    }
+    /* main */
+    .mainContainer{
+        flex-direction: row;
+        justify-content: space-around;
+    }
+    .tournées{
+        width: 26%;
+        height: 27%;
+    }
+    .tournées h1{
+        font-size: 4vw;
+    }
+    .tournées h2{
+        font-size: 2.5vw;
+    }
+    .tournées h3{
+        font-size: 2vw;
+    }
+    .tournées p{
+        font-size: 1.5vw;
+    }
+    .tournées a {
+        font-size: 1.5vw;
+    }
+    /* footer */
+    .socialNav{
+        width: 40%;
+        left: 60%;
+    }
+    .socialNav div{
+        height: 30px;
+        width: 30px;
+    }
+}
+
+@media screen and (max-width: 425px){
+    /* navLinks */
+    .navbar{
+        height: 15%;
+    }
+    .navLinks{
+        font-size: 4.5vw;;
+    }
+    .navLinks:before{
+        content: ''
+    }
+    /* main */
+    .mainContainer{
+        width: auto;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+    .tournées{
+        width: 40%;
+        height: 20%;
+    }
+    .tournées h1{
+        font-size: 6vw;
+    }
+    .tournées h2{
+        font-size: 4vw;
+    }
+    .tournées h3{
+        font-size: 3.5vw;
+    }
+    .tournées p{
+        font-size: 2.5vw;
+    }
+    .tournées a {
+        font-size: 2.5vw;
+    }
+    /* footer */
+    .socialNav{
+        position: relative;
+        width: 50%;
+        left: 25%;
+        top: 0;
+    }
+    .socialNav div{
+        height: 25px;
+        width: 25px;
+    }
 }

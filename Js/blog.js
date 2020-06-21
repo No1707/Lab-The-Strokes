@@ -19,6 +19,16 @@ $(document).ready(function () {
 
 })
 
+const Wwidth = window.innerWidth
+
+if( Wwidth < "1025"){
+    const firsts = document.querySelectorAll(".revealFirst")
+    firsts[1].classList.remove("revealFirst")
+    firsts[1].classList.add("reveal")
+    firsts[2].classList.remove("revealFirst")
+    firsts[2].classList.add("reveal")
+}
+
 /**
  * Page loader
  */

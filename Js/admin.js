@@ -22,11 +22,13 @@ document.querySelector(".confirm").addEventListener("click", () => {
         .then(function () {
           alert("Vous êtes connecté")
           location.assign("index.html")
-        });
+        })
     })
     .catch(function (error) {
-      var errorCode = error.code;
-      var errorMessage = error.message;
-    });
+      console.log(error.code)
+      if(error.code === "auth/wrong-password" || error.code === "auth/invalid-email"){
+        alert("Adresse email ou mot de passe incorrect")
+      }
+    })
 
 })

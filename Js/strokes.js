@@ -17,7 +17,17 @@ $(document).ready(function () {
         background.classList.add("backAnim")
     }, 1500)
 
+    if( Wwidth > "430"){
+        var rellax = new Rellax(".rellax")
+    } else {
+        $(".mobile").append(`<img src="./lib/imgArticle2.jpg" alt="The Strokes">`)
+        $(".mobileImg").remove()
+        $(".fourth h2").css("text-align","center")
+    }   
+
 })
+
+const Wwidth = window.innerWidth
 
 /**
  * Page loader
@@ -87,7 +97,7 @@ window.addEventListener("scroll", () => {
 
     for (const _item of revealItems) {
 
-        if (!_item.revealed && limit > _item.top + _item.height * 0.5) {
+        if (!_item.revealed && limit > _item.top + _item.height * 0.3) {
             _item.revealed = true
             _item.element.classList.add("revealed")
         }

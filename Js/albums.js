@@ -1,32 +1,33 @@
 $(document).ready(function () {
 
+        setTimeout(() => {
+            // fade out loader when loaded
+            $(".loaderWrapper").fadeOut("slow")
     
-    setTimeout(() => {
-        // fade out loader when loaded
-        $(".loaderWrapper").fadeOut("slow")
-
-        // reveal links
-        const links = document.querySelectorAll(".navLinks")
-        links.forEach(element => element.classList.add("linksAnim"))
-
-        // dark background
-        const background = document.querySelector(".heroBack")
-        background.classList.add("backAnim")
-
-        // reveal right
-        const right = document.querySelector(".rightContainer")
-        right.classList.add("rightAnim")
-
-        // reveal right
-        const left = document.querySelector(".leftContainer")
-        left.classList.add("leftAnim")
-    }, 1500)
-
+            // reveal links
+            const links = document.querySelectorAll(".navLinks")
+            links.forEach(element => element.classList.add("linksAnim"))
+    
+            // dark background
+            const background = document.querySelector(".heroBack")
+            background.classList.add("backAnim")
+    
+            // reveal right
+            const right = document.querySelector(".rightContainer")
+            right.classList.add("rightAnim")
+    
+            // reveal right
+            const left = document.querySelector(".leftContainer")
+            left.classList.add("leftAnim")
+        }, 1500)
+    
     new Plyr('#player', {
         settings: []
     });
 
 })
+
+const Wwidth = window.innerWidth
 
 /**
  * Page loader
@@ -45,6 +46,24 @@ function randomImage() {
     theImage.alt = imgArray[imgIndex]
 }
 randomImage()
+
+/**
+ * Resize
+ */
+
+if( Wwidth < "770"){
+    $(".mobile").css("display","none")
+}
+window.addEventListener("resize", () => {
+
+    const Wwidth = window.innerWidth
+
+    if( Wwidth < "770"){
+        $(".mobile").css("display","none")
+    } else {
+        $(".mobile").css("display","block")
+    }
+})
 
 
 /**
@@ -68,12 +87,12 @@ const storage = firebase.storage();
  */
 
 $(".playTitle").on("click", function () {
-    
+
     $(".playTitle").removeClass("playing")
     this.classList.add("playing")
     const title = this.textContent
     const ref = title.split(" ").join("") + ".mp3"
-    
+
     storage.ref(ref).getDownloadURL().then(function (url) {
 
         const player = document.querySelector("#player")
@@ -83,62 +102,3 @@ $(".playTitle").on("click", function () {
         console.log(error)
     })
 })
-
-/**
- * Animations
- */
-
-// albums
-
-const albumsPath = [
-    "./lib/coverTheNewAbnormal.jpg",
-    "./lib/coverComedownMachine.jpg",
-    "./lib/coverAngles.jpg",
-    "./lib/coverFirstImpressionsOfEarth.jpg",
-    "./lib/coverRoomOnFire.jpg",
-    "./lib/coverIsThisIt.jpg"
-]
-function animation() {
-
-    // variables
-    let album = document.querySelector(".album")
-    let disque = document.querySelector(".disque")
-    const parent = document.querySelector(".leftContainer")
-    const value = select.value
-
-    // when animation ends
-    album.addEventListener("animationend", () => {
-        switch (value) {
-            case "1":
-                parent.innerHTML = `<div class="album albumAnim2"><img src="${albumsPath[0]}" alt=""></div><div class="disque disque1 disqueAnim2"></div>`
-                break;
-            case "2":
-                parent.innerHTML = `<div class="album albumAnim2"><img src="${albumsPath[1]}" alt=""></div><div class="disque disque2 disqueAnim2"></div>`
-                break;
-            case "3":
-                parent.innerHTML = `<div class="album albumAnim2"><img src="${albumsPath[2]}" alt=""></div><div class="disque disque2 disqueAnim2"></div>`
-                break;
-            case "4":
-                parent.innerHTML = `<div class="album albumAnim2"><img src="${albumsPath[3]}" alt=""></div><div class="disque disque2 disqueAnim2"></div>`
-                break;
-            case "5":
-                parent.innerHTML = `<div class="album albumAnim2"><img src="${albumsPath[4]}" alt=""></div><div class="disque disque2 disqueAnim2"></div>`
-                break;
-            case "6":
-                parent.innerHTML = `<div class="album albumAnim2"><img src="${albumsPath[5]}" alt=""></div><div class="disque disque2 disqueAnim2"></div>`
-                break;
-        }
-        album = document.querySelector(".album")
-        disque = document.querySelector(".disque")
-        album.addEventListener("animationend", () => {
-            album.classList.remove("albumAnim2")
-            disque.classList.remove("disqueAnim2")
-        })
-    })
-
-    album.classList.add("albumAnim1")
-    disque.classList.add("disqueAnim1")
-}
-
-let select = document.querySelector("#albumsSelect")
-select.addEventListener("change", animation)

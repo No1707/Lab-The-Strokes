@@ -1,8 +1,12 @@
 $(document).ready(function () {
 
-  // animation
+  // reveal links
   const links = document.querySelectorAll(".navLinks")
   links.forEach(element => element.classList.add("linksAnim"))
+
+  // reveal background
+  const background = document.querySelector(".heroBack")
+  background.classList.add("backAnim")
 
   setTimeout(() => {
     $(".countdown").addClass("reveal")
@@ -38,7 +42,6 @@ db.collection("dates").onSnapshot(function (querySnapshot) {
   })
 
 })
-console.log(datesArray)
 
 setTimeout(() => {
   console.log("exec")
@@ -87,13 +90,37 @@ function countDown(date) {
  * Animations
  */
 
-// background move on mousemove
-const windo = $(window)
+ // background move on mousemove
+ function BGAnim(){
+  const windo = $(window)
 
-$(".hero").mousemove((e) => {
-  let moveX = ((windo.width() / 2) - e.pageX) * 0.1
-  let moveY = ((windo.height() / 2) - e.pageY) * 0.1
-  $(".heroBack").css("margin-left", moveX + "px")
-  $(".heroBack").css("margin-top", moveY + "px")
+  $(".hero").on("mousemove", (e) => {
+    let moveX = ((windo.width() / 2) - e.pageX) * 0.1
+    let moveY = ((windo.height() / 2) - e.pageY) * 0.1
+    $(".heroBack").css("margin-left", moveX + "px")
+    $(".heroBack").css("margin-top", moveY + "px")
+  })
+ }
+
+/**
+ * Sizes 
+ */
+
+const Wwidth = window.innerWidth
+
+if (Wwidth > "1024") {
+  BGAnim()
+}
+
+// resize
+$(window).on("resize", function () {
+
+  if ($(window).width() > "1024") {
+    BGAnim()
+  } else {
+    $(".hero").unbind("mousemove")
+  }
+
 })
+
 

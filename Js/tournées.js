@@ -60,6 +60,8 @@ const dateIp = $("#date")
 const cityIp = $("#city")
 const countryIp = $("#country")
 const placeIp = $("#place")
+const lienIp = $("#tickets")
+
 
 db.collection("dates").onSnapshot(function (querySnapshot) {
 
@@ -71,8 +73,9 @@ db.collection("dates").onSnapshot(function (querySnapshot) {
 
         if (doc.data().Full) {
             main.append(`<div class="tournées ${doc.id}"><h2>${doc.data().Date}</h2><h1>${doc.data().City}</h1><h3>${doc.data().Place}</h3><p>${doc.data().Country}</p><div><button class="adminEdit" title="Modifier"><img src="./lib/editIcon.png" alt=""></button><button class="deleteDate" title="Supprimer"><img src="./lib/deleteIcon.png" alt=""></button></div><p class="full">Complet</p></div>`)
+
         } else {
-            main.append(`<div class="tournées ${doc.id}"><h2>${doc.data().Date}</h2><h1>${doc.data().City}</h1><h3>${doc.data().Place}</h3><p>${doc.data().Country}</p><div><button class="adminEdit" title="Modifier"><img src="./lib/editIcon.png" alt=""></button><button class="deleteDate" title="Supprimer"><img src="./lib/deleteIcon.png" alt=""></button></div></div>`)
+            main.append(`<div class="tournées ${doc.id}"><h2>${doc.data().Date}</h2><h1>${doc.data().City}</h1><h3>${doc.data().Place}</h3><p>${doc.data().Country}</p><div><button class="adminEdit" title="Modifier"><img src="./lib/editIcon.png" alt=""></button><button class="deleteDate" title="Supprimer"><img src="./lib/deleteIcon.png" alt=""></button></div><a target="blank" href="${doc.data().Lien}">Acheter des places</a></div>`)
         }
     })
 
@@ -95,6 +98,7 @@ db.collection("dates").onSnapshot(function (querySnapshot) {
                     cityIp.val(doc.data().City)
                     countryIp.val(doc.data().Country)
                     placeIp.val(doc.data().Place)
+                    lienIp.val(doc.data().Lien)
                 }
             })
 
@@ -103,6 +107,20 @@ db.collection("dates").onSnapshot(function (querySnapshot) {
             $("#changeDates").css("display", "inline-block")
             $("#confirmDates").css("display", "none")
             $(".adminInputs").css("display", "flex")
+        })
+
+        // delete dates
+        $(".deleteDate").on("click", function () {
+
+            const deleteClasse = this.parentNode.parentNode.className.split(" ")[1]
+            $(".adminInputs").css("display", "none")
+
+            db.collection("dates").doc(deleteClasse).delete().then(function () {
+                alert("supprimé")
+            }).catch(function (error) {
+                console.log(error)
+            })
+
         })
     }
 })
@@ -117,6 +135,7 @@ $("#changeDates").on("click", function () {
         City: cityIp.val(),
         Country: countryIp.val(),
         Place: placeIp.val(),
+        Lien: lienIp.val(),
         Full: checkbox === true ? true : false
     }).then(function () {
         alert("Modifié")
@@ -126,20 +145,6 @@ $("#changeDates").on("click", function () {
     })
 })
 
-// delete dates
-$(".deleteDate").on("click", function () {
-
-    const deleteClasse = this.parentNode.parentNode.className.split(" ")[1]
-    $(".adminInputs").css("display", "none")
-
-    db.collection("dates").doc(deleteClasse).delete().then(function () {
-        alert("supprimé")
-    }).catch(function (error) {
-        console.log(error)
-    })
-
-})
-
 // display add dates inputs
 $("#adminAdd").on("click", () => {
 
@@ -147,12 +152,14 @@ $("#adminAdd").on("click", () => {
     cityIp.val("")
     countryIp.val("")
     placeIp.val("")
+    lienIp.val("")
 
-    $("#isfull").css("display", "inline-block")
+    $("#isfullLabel").css("display", "none")
+    $("#isfull").css("display", "none")
     $("#changeDates").css("display", "none")
-    $("#deleteDates").css("display", "none")
     $("#confirmDates").css("display", "inline-block")
     $(".adminInputs").css("display", "flex")
+
 })
 
 // confirm add dates
@@ -165,6 +172,7 @@ $("#confirmDates").on("click", () => {
         City: cityIp.val(),
         Country: countryIp.val(),
         Place: placeIp.val(),
+        Lien: lienIp.val(),
         Full: false
     }).then(function () {
         alert("Date ajouté")
